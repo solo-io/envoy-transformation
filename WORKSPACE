@@ -1,5 +1,8 @@
 workspace(name="transformation_filter")
 
+# Use skylark for native Git.
+load('@bazel_tools//tools/build_defs/repo:git.bzl', 'git_repository')
+
 ENVOY_SHA = "f79a62b7cc9ca55d20104379ee0576617630cdaa"  # Feb 15, 2018 ( test: fix nit after #2591 (#2601) )
 
 http_archive(
@@ -8,11 +11,11 @@ http_archive(
     url = "https://github.com/envoyproxy/envoy/archive/" + ENVOY_SHA + ".zip",
 )
 
-ENVOY_COMMON_SHA = "0fefba1a893e9d8e24700b0c5919f301a3d10249"  # Feb 19, 2018 (let the child filter  retrieve the function.)
+ENVOY_COMMON_SHA = "ee625c53848d990dd7e5b87c5fbcd2776054e9f8" # Feb 26, 2018 (split metadata accessor)
 
 # load solo common
 git_repository(
-    name = "envoy_common",
+    name = "solo_envoy_common",
     remote = "git@github.com:solo-io/envoy-common",
     commit = ENVOY_COMMON_SHA,
 )
